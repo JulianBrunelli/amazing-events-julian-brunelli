@@ -1,0 +1,146 @@
+header {
+  min-height: 13vh;
+}
+
+body {
+  background-color: rgb(224, 188, 188);
+}
+
+main {
+  width: 100%;
+  min-height: 70vh;
+}
+
+header img {
+  height: 5vh;
+}
+
+.container-nav {
+  height: 3rem;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(196, 14, 114);
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+}
+
+.container-nav:hover {
+  background-color: rgb(247, 1, 136);
+}
+
+.carousel-item {
+  height: 30vh;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  object-position: center;
+  height: 40vh;
+}
+
+h1 {
+  color: black;
+}
+
+.border-check {
+  border: 0.5px solid black;
+}
+
+.boton-buscador-inicio {
+  border-color: rgb(196, 14, 114);
+  color: rgb(196, 14, 114);
+}
+
+.buscador-inicio {
+  border-color: rgb(196, 14, 114);
+}
+
+.parrafo-card {
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.card-text {
+  min-height: 10vh;
+}
+
+.redes img {
+  margin-left: 0.5rem;
+}
+
+footer {
+  height: 4rem;
+}
+
+.text-contact {
+  width: 16rem;
+  height: 25vh;
+}
+
+input {
+  width: 16rem;
+}
+
+.card-details {
+  min-height: 60vh;
+}
+
+.card-body p {
+  margin: 0;
+}
+
+.container-details {
+  min-height: 60vh;
+}
+
+.image-details {
+  width: 55vw;
+}
+
+table,
+th,
+td {
+  font-size: 14px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 10px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .card-h {
+    height: 40vh;
+  }
+  table,
+  th,
+  td {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .image-details {
+    width: 35vw;
+    margin-left: 10px;
+    margin-bottom: 7px;
+  }
+
+  .first-card-details {
+    height: 43vh;
+  }
+
+  .card-h {
+    height: 40vh;
+  }
+  table,
+  th,
+  td {
+    font-size: 20px;
+  }
+}
