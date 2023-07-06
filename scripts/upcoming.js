@@ -1,7 +1,9 @@
-const contenedorCartas = document.getElementById("home-js");
+const contenedorCartas = document.getElementById("upcoming-js");
 console.log(contenedorCartas);
 console.log(data.events);
 const arrayEventos = data.events;
+const currentDate = data.currentDate;
+console.log(currentDate)
 console.log(arrayEventos);
 
 function crearMaqueta(propertiesCards) {
@@ -26,9 +28,11 @@ function crearMaqueta(propertiesCards) {
     </div>`
 }
 
-function imprimirMaqueta(parametroArray) {
-    for (let evento of parametroArray) {
-        contenedorCartas.innerHTML += crearMaqueta(evento)
+function imprimirMaqueta(array, dataCurrendate) {
+    for (let evento of array) {
+        if (dataCurrendate > evento.date) {
+            contenedorCartas.innerHTML += crearMaqueta(evento)
+        }
     }
 }
-imprimirMaqueta(arrayEventos);
+imprimirMaqueta(arrayEventos, currentDate);
