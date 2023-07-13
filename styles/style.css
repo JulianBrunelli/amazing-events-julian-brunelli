@@ -90,6 +90,11 @@ input {
 
 .card-body p {
   margin: 0;
+  height: 100%;
+}
+
+.card-body {
+  height: 176px;
 }
 
 .container-details {

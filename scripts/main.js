@@ -1,8 +1,6 @@
-const contenedorCartas = document.getElementById("home-js");
-console.log(contenedorCartas);
-console.log(data.events);
+const containerCards = document.getElementById("home-js");
 const arrayEventos = data.events;
-console.log(arrayEventos);
+const containerCheckBox = document.getElementById("containerCheckBox")
 
 function crearMaqueta(propertiesCards) {
     return `<div class="card col-10 col-md-5 mt-5 col-xl-3">
@@ -20,15 +18,69 @@ function crearMaqueta(propertiesCards) {
         <p class="fw-medium d-flex align-items-center m-0">
             Price: <span class="parrafo-card">$ ${propertiesCards.price}</span>
         </p>
-        <a href="./pages/details.html" class="btn btn-primary">Details</a>
+        <a href="./pages/details.html?idEvent=${propertiesCards._id}" class="btn btn-primary">Details</a>
         </div>
     </section>
     </div>`
 }
 
 function imprimirMaqueta(parametroArray) {
+    let template = ""
     for (let evento of parametroArray) {
-        contenedorCartas.innerHTML += crearMaqueta(evento)
+        template += crearMaqueta(evento)
     }
+    containerCards.innerHTML += template
 }
 imprimirMaqueta(arrayEventos);
+
+let crearCheckBox = (category) => {
+    return `<div class="form-check form-check-inline">
+    <input
+        class="border-check form-check-input"
+        type="checkbox"
+        id="${category}"
+        value="${category}"
+    />
+    <label class="form-check-label" for="${category}"
+        >${category}</label
+    >
+    </div>`
+}
+
+
+let imprimirCheckBox = (arrayEventos) => {
+    let input = ""
+    arrayEventos.forEach(element => {
+        input += crearCheckBox(element)
+    });
+    containerCheckBox.innerHTML += input
+}
+let categorys = arrayEventos.map(arrayEventos => arrayEventos.category)
+let myArray = Array.from(new Set(categorys))
+imprimirCheckBox(myArray)
+
+containerCheckBox.addEventListener("change", () => {
+    let checkboxCategorys = document.querySelectorAll("input[type='checkbox']:checked")
+    let checkBoxArray = Array.from(checkboxCategorys)
+    let checkBoxChecked = checkBoxArray.map(checkBoxArray => checkBoxArray.value)
+    containerCards.innerHTML = ""
+    imprimirMaqueta(filterByCategories(arrayEventos, checkBoxChecked))
+})
+
+let filterByCategories = (array, checkBoxChecked) => {
+    let aux = array.filter(array => checkBoxChecked.includes(array.category) || checkBoxChecked == 0)
+    return aux
+}
+
+const containerSearch = document.getElementById("containerSreach")
+containerSearch.addEventListener("input", (e) => {
+    let inputSearch = e.target.value
+    let arrayFilter = arrayEventos.filter(evento => evento.name.toLowerCase().startsWith(inputSearch.toLowerCase()))
+    containerCards.innerHTML = ""
+    if (arrayFilter.length == 0) {
+        return imprimirMaqueta(arrayEventos)
+    } else {
+        return imprimirMaqueta(arrayFilter)
+    }
+})
+
