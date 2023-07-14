@@ -3,7 +3,6 @@ let arrayEventos = data.events
 let idDetails = location.search
 let paramsDetails = new URLSearchParams(idDetails)
 let objectEvent = paramsDetails.get('idEvent')
-console.log(objectEvent)
 let eventDetails = arrayEventos.find(event => event._id === objectEvent)
 
 function crearMaqueta(arrayFiltrado, container) {
