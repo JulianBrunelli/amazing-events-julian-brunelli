@@ -8,15 +8,15 @@ let eventDetails = arrayEventos.find(event => event._id === objectEvent)
 
 function crearMaqueta(arrayFiltrado, container) {
     container.innerHTML += `<div
-    class="card mb-3 col-8 d-flex flex-column align-items-center flex-lg-row"
+    class="card card-details-js mb-2 col-9 d-flex flex-column align-items-center flex-lg-row"
     >
     <img
         src="${arrayFiltrado.image}"
-        class="card-img-top image-details first-card-details mt-2"
+        class="card-img-top image-details"
         alt=""
     />
-    <section class="card-body">
-        <h5 class="card-title text-center">
+    <section>
+        <h5 class="card-title text-center mt-1 text-decoration-underline">
         ${arrayFiltrado.name}
         </h5>
         <p>Date: ${arrayFiltrado.date}</p>

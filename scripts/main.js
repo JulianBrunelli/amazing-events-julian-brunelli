@@ -1,6 +1,8 @@
 const containerCards = document.getElementById("home-js");
 const arrayEventos = data.events;
 const containerCheckBox = document.getElementById("containerCheckBox")
+const inputTypeSearch = document.getElementById("containerSreach")
+
 
 function crearMaqueta(propertiesCards) {
     return `<div class="card col-10 col-md-5 mt-5 col-xl-3">
@@ -59,28 +61,41 @@ let categorys = arrayEventos.map(arrayEventos => arrayEventos.category)
 let myArray = Array.from(new Set(categorys))
 imprimirCheckBox(myArray)
 
+let checkboxCategorys = document.querySelectorAll("input[type='checkbox']")
+
 containerCheckBox.addEventListener("change", () => {
-    let checkboxCategorys = document.querySelectorAll("input[type='checkbox']:checked")
-    let checkBoxArray = Array.from(checkboxCategorys)
-    let checkBoxChecked = checkBoxArray.map(checkBoxArray => checkBoxArray.value)
+    let arrayCrossedFilter = crossedFilter(arrayEventos, inputTypeSearch.value, checkboxCategorys)
     containerCards.innerHTML = ""
-    imprimirMaqueta(filterByCategories(arrayEventos, checkBoxChecked))
-})
-
-let filterByCategories = (array, checkBoxChecked) => {
-    let aux = array.filter(array => checkBoxChecked.includes(array.category) || checkBoxChecked == 0)
-    return aux
-}
-
-const containerSearch = document.getElementById("containerSreach")
-containerSearch.addEventListener("input", (e) => {
-    let inputSearch = e.target.value
-    let arrayFilter = arrayEventos.filter(evento => evento.name.toLowerCase().startsWith(inputSearch.toLowerCase()))
-    containerCards.innerHTML = ""
-    if (arrayFilter.length == 0) {
-        return imprimirMaqueta(arrayEventos)
+    if (arrayCrossedFilter.length == 0) {
+        containerCards.innerHTML = '<h2>No events were found</h2>'
     } else {
-        return imprimirMaqueta(arrayFilter)
+        imprimirMaqueta(arrayCrossedFilter)
     }
 })
 
+function filterByCategories(array, nodeList) {
+    let checkBoxArray = Array.from(nodeList).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value)
+    let aux = array.filter(event => checkBoxArray.includes(event.category) || checkBoxArray.length == 0)
+    return aux
+}
+
+inputTypeSearch.addEventListener("input", () => {
+    containerCards.innerHTML = ""
+    let arrayCrossedFilter = crossedFilter(arrayEventos, inputTypeSearch.value, checkboxCategorys)
+    if (arrayCrossedFilter.length == 0) {
+        containerCards.innerHTML = '<h2>No events were found</h2>'
+    } else {
+        imprimirMaqueta(arrayCrossedFilter)
+    }
+})
+
+function filterByInputSearch(array, input) {
+    let filteredArray = array.filter(evento => evento.name.toLowerCase().startsWith(input.toLowerCase()))
+    return filteredArray
+}
+
+function crossedFilter(arrayOrigin, valueUser, checkboxChecked) {
+    let filterInputSearchCrossed = filterByInputSearch(arrayOrigin, valueUser)
+    let filterCheckboxCrossed = filterByCategories(filterInputSearchCrossed, checkboxChecked)
+    return filterCheckboxCrossed
+}
