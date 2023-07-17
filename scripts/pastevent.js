@@ -1,8 +1,39 @@
 const containerCards = document.getElementById("pastevents-js");
-const arrayEventos = data.events;
-const currentDate = data.currentDate;
 const containerCheckBox = document.getElementById("containerCheckBox")
 const inputTypeSearch = document.getElementById("containerSreach")
+
+let events = []
+let current = ""
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+    .then(resulte => resulte.json())
+    .then(resulte => {
+        events = resulte.events
+        current = resulte.currentDate
+        imprimirMaqueta(events)
+        let categorys = events.map(events => events.category)
+        let myArray = Array.from(new Set(categorys))
+        imprimirCheckBox(myArray)
+        let checkboxCategorys = document.querySelectorAll("input[type='checkbox']")
+        containerCheckBox.addEventListener("change", () => {
+            let arrayCrossedFilter = crossedFilter(events, inputTypeSearch.value, checkboxCategorys)
+            containerCards.innerHTML = ""
+            if (arrayCrossedFilter.length == 0) {
+                containerCards.innerHTML = '<h2>No events were found</h2>'
+            } else {
+                imprimirMaqueta(arrayCrossedFilter)
+            }
+        })
+        inputTypeSearch.addEventListener("input", () => {
+            containerCards.innerHTML = ""
+            let arrayCrossedFilter = crossedFilter(events, inputTypeSearch.value, checkboxCategorys)
+            if (arrayCrossedFilter.length == 0) {
+                containerCards.innerHTML = '<h2>No events were found</h2>'
+            } else {
+                imprimirMaqueta(arrayCrossedFilter)
+            }
+        })
+    })
+    .catch(error => console.error(error))
 
 function crearMaqueta(propertiesCards) {
     return `<div class="card col-10 col-md-5 mt-5 col-xl-3">
@@ -27,14 +58,13 @@ function crearMaqueta(propertiesCards) {
 }
 
 function imprimirMaqueta(parametroArray) {
-    let arrayFiltrado = parametroArray.filter(evento => evento.date < currentDate)
+    let arrayFiltrado = parametroArray.filter(evento => evento.date < current)
     let template = ""
     for (let evento of arrayFiltrado) {
         template += crearMaqueta(evento)
     }
     containerCards.innerHTML += template
 }
-imprimirMaqueta(arrayEventos)
 
 let crearCheckBox = (category) => {
     return `<div class="form-check form-check-inline">
@@ -50,45 +80,19 @@ let crearCheckBox = (category) => {
     </div>`
 }
 
-
-let imprimirCheckBox = (arrayEventos) => {
+let imprimirCheckBox = (events) => {
     let imput = ""
-    arrayEventos.forEach(element => {
+    events.forEach(element => {
         imput += crearCheckBox(element)
     });
     containerCheckBox.innerHTML += imput
 }
-let categorys = arrayEventos.map(arrayEventos => arrayEventos.category)
-let mySet1 = Array.from(new Set(categorys))
-imprimirCheckBox(mySet1)
-
-let checkboxCategorys = document.querySelectorAll("input[type='checkbox']")
-
-containerCheckBox.addEventListener("change", () => {
-    let arrayCrossedFilter = crossedFilter(arrayEventos, inputTypeSearch.value, checkboxCategorys)
-    containerCards.innerHTML = ""
-    if (arrayCrossedFilter.length == 0) {
-        containerCards.innerHTML = '<h2>No events were found</h2>'
-    } else {
-        imprimirMaqueta(arrayCrossedFilter)
-    }
-})
 
 function filterByCategories(array, nodeList) {
     let checkBoxArray = Array.from(nodeList).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value)
     let aux = array.filter(event => checkBoxArray.includes(event.category) || checkBoxArray.length == 0)
     return aux
 }
-
-inputTypeSearch.addEventListener("input", () => {
-    containerCards.innerHTML = ""
-    let arrayCrossedFilter = crossedFilter(arrayEventos, inputTypeSearch.value, checkboxCategorys)
-    if (arrayCrossedFilter.length == 0) {
-        containerCards.innerHTML = '<h2>No events were found</h2>'
-    } else {
-        imprimirMaqueta(arrayCrossedFilter)
-    }
-})
 
 function filterByInputSearch(array, input) {
     let filteredArray = array.filter(evento => evento.name.toLowerCase().startsWith(input.toLowerCase()))

@@ -1,8 +1,39 @@
 const containerCards = document.getElementById("home-js");
-const arrayEventos = data.events;
 const containerCheckBox = document.getElementById("containerCheckBox")
 const inputTypeSearch = document.getElementById("containerSreach")
 
+let events = []
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+    .then(resulte => resulte.json())
+    .then(resulte => {
+        events = resulte.events
+        console.log(events)
+        imprimirMaqueta(events)
+        let categorys = events.map(events => events.category)
+        let myArray = Array.from(new Set(categorys))
+        imprimirCheckBox(myArray)
+        let checkboxCategorys = document.querySelectorAll("input[type='checkbox']")
+        containerCheckBox.addEventListener("change", () => {
+            let arrayCrossedFilter = crossedFilter(events, inputTypeSearch.value, checkboxCategorys)
+            console.log(arrayCrossedFilter);
+            containerCards.innerHTML = ""
+            if (arrayCrossedFilter.length == 0) {
+                containerCards.innerHTML = '<h2>No events were found</h2>'
+            } else {
+                imprimirMaqueta(arrayCrossedFilter)
+            }
+        })
+        inputTypeSearch.addEventListener("input", () => {
+            containerCards.innerHTML = ""
+            let arrayCrossedFilter = crossedFilter(events, inputTypeSearch.value, checkboxCategorys)
+            if (arrayCrossedFilter.length == 0) {
+                containerCards.innerHTML = '<h2>No events were found</h2>'
+            } else {
+                imprimirMaqueta(arrayCrossedFilter)
+            }
+        })
+    })
+    .catch(error => console.error(error))
 
 function crearMaqueta(propertiesCards) {
     return `<div class="card col-10 col-md-5 mt-5 col-xl-3">
@@ -33,7 +64,6 @@ function imprimirMaqueta(parametroArray) {
     }
     containerCards.innerHTML += template
 }
-imprimirMaqueta(arrayEventos);
 
 let crearCheckBox = (category) => {
     return `<div class="form-check form-check-inline">
@@ -50,28 +80,15 @@ let crearCheckBox = (category) => {
 }
 
 
-let imprimirCheckBox = (arrayEventos) => {
+let imprimirCheckBox = (events) => {
     let input = ""
-    arrayEventos.forEach(element => {
+    events.forEach(element => {
         input += crearCheckBox(element)
     });
     containerCheckBox.innerHTML += input
 }
-let categorys = arrayEventos.map(arrayEventos => arrayEventos.category)
-let myArray = Array.from(new Set(categorys))
-imprimirCheckBox(myArray)
 
-let checkboxCategorys = document.querySelectorAll("input[type='checkbox']")
 
-containerCheckBox.addEventListener("change", () => {
-    let arrayCrossedFilter = crossedFilter(arrayEventos, inputTypeSearch.value, checkboxCategorys)
-    containerCards.innerHTML = ""
-    if (arrayCrossedFilter.length == 0) {
-        containerCards.innerHTML = '<h2>No events were found</h2>'
-    } else {
-        imprimirMaqueta(arrayCrossedFilter)
-    }
-})
 
 function filterByCategories(array, nodeList) {
     let checkBoxArray = Array.from(nodeList).filter(checkbox => checkbox.checked).map(checkbox => checkbox.value)
@@ -79,15 +96,6 @@ function filterByCategories(array, nodeList) {
     return aux
 }
 
-inputTypeSearch.addEventListener("input", () => {
-    containerCards.innerHTML = ""
-    let arrayCrossedFilter = crossedFilter(arrayEventos, inputTypeSearch.value, checkboxCategorys)
-    if (arrayCrossedFilter.length == 0) {
-        containerCards.innerHTML = '<h2>No events were found</h2>'
-    } else {
-        imprimirMaqueta(arrayCrossedFilter)
-    }
-})
 
 function filterByInputSearch(array, input) {
     let filteredArray = array.filter(evento => evento.name.toLowerCase().startsWith(input.toLowerCase()))
