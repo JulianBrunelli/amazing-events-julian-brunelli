@@ -15,7 +15,9 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
         data = resulte.events
         current = resulte.currentDate
         let arrayOrder = data.sort((a, b) => b.capacity - a.capacity)
+        console.log(arrayOrder);
         let pastEvents = arrayOrder.filter(event => event.date < current)
+        pastEvents.sort((a, b) => calculatePercentage(a.assistance, a.capacity) - calculatePercentage(b.assistance, b.capacity))
 
         let majorEvent = pastEvents[pastEvents.length - 1];
         let nameMajorEvent = pastEvents[pastEvents.length - 1].name
