@@ -16,15 +16,14 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
         current = resulte.currentDate
         let arrayOrder = data.sort((a, b) => b.capacity - a.capacity)
         let pastEvents = arrayOrder.filter(event => event.date < current)
-        pastEvents.sort((a, b) => calculatePercentage(a.assistance, a.capacity) - calculatePercentage(b.assistance, b.capacity))
 
-        let majorEvent = pastEvents[0];
-        let nameMajorEvent = pastEvents[0].name
+        let majorEvent = pastEvents[pastEvents.length - 1];
+        let nameMajorEvent = pastEvents[pastEvents.length - 1].name
         let percentageMajor = calculatePercentage(majorEvent.assistance, majorEvent.capacity).toFixed(2)
         createFirstTable(nameMajorEvent, percentageMajor, tdOne)
 
-        let minorEvent = pastEvents[pastEvents.length - 1];
-        let nameMinorEvent = pastEvents[pastEvents.length - 1].name
+        let minorEvent = pastEvents[0];
+        let nameMinorEvent = pastEvents[0].name
         let percentageMinor = calculatePercentage(minorEvent.assistance, minorEvent.capacity).toFixed(2)
         createFirstTable(nameMinorEvent, percentageMinor, tdTwo)
 
