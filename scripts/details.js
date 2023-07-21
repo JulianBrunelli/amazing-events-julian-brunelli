@@ -1,14 +1,14 @@
 let cardsDetails = document.getElementById("cardsDetails")
 let events = []
-let idDetails = location.search
-let paramsDetails = new URLSearchParams(idDetails)
-let objectEvent = paramsDetails.get('idEvent')
-let eventDetails = events.find(event => event._id == objectEvent)
 
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
     .then(resulte => resulte.json())
     .then(datos => {
         events = datos.events
+        let idDetails = location.search
+        let paramsDetails = new URLSearchParams(idDetails)
+        let objectEvent = paramsDetails.get('idEvent')
+        let eventDetails = events.find(event => event._id == objectEvent)
         crearMaqueta(eventDetails, cardsDetails)
     })
     .catch(error => console.error(error))

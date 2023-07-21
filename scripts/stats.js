@@ -47,7 +47,7 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
                 capacity += event.capacity
             }
             percentageOfAssistanceUpComing = calculatePercentage(assistance, capacity)
-            return { name: category, reveneus: revenuesUpComing, assistance: percentageOfAssistanceUpComing };
+            return { name: category, revenues: revenuesUpComing, assistance: percentageOfAssistanceUpComing };
         })
         printTable(forCategoryPast, tableThree, createTableTwo)
 
