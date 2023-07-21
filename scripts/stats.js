@@ -39,15 +39,15 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
             let eventFiltred = pastEvents.filter(event => event.category === category)
             let assistance = 0;
             let capacity = 0;
-            let revenuesUpComing = 0;
-            let percentageOfAssistanceUpComing = 0;
+            let revenuesPastEvents = 0;
+            let percentageOfAssistancePastEvents = 0;
             for (const event of eventFiltred) {
-                revenuesUpComing += event.price * event.assistance
+                revenuesPastEvents += event.price * event.assistance
                 assistance += event.assistance
                 capacity += event.capacity
             }
-            percentageOfAssistanceUpComing = calculatePercentage(assistance, capacity)
-            return { name: category, revenues: revenuesUpComing, assistance: percentageOfAssistanceUpComing };
+            percentageOfAssistancePastEvents = calculatePercentage(assistance, capacity)
+            return { name: category, revenues: revenuesPastEvents, assistance: percentageOfAssistancePastEvents };
         })
         printTable(forCategoryPast, tableThree, createTableTwo)
 
@@ -65,7 +65,7 @@ fetch("https://mindhub-xj03.onrender.com/api/amazing")
                 capacity += event.capacity
             }
             percentageOfAssistanceUpComing = calculatePercentage(estimate, capacity)
-            return { name: category, reveneus: revenuesUpComing, assistance: percentageOfAssistanceUpComing };
+            return { name: category, revenues: revenuesUpComing, assistance: percentageOfAssistanceUpComing };
         })
         printTable(forCategoryUpComing, tableTwo, createTableTwo)
     })
@@ -87,7 +87,7 @@ function createFirstTableTwo(eventName, capacity, containerTable) {
 function createTableTwo(event) {
     return `<tr>
         <td class="col-3">${event.name}</td>
-        <td class="col-4">${event.reveneus.toLocaleString()}USD</td>
+        <td class="col-4">${event.revenues.toLocaleString()}USD</td>
         <td class="col-3">${event.assistance.toFixed()}%</td>
         </tr>`
 }
@@ -99,6 +99,3 @@ function printTable(events, containerHTML, fnCreate) {
     }
     containerHTML.innerHTML += template
 }
-
-
-
