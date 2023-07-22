@@ -41,9 +41,28 @@ header img {
   height: 40vh;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 h1 {
-  color: black;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 3em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: linear-gradient(rgb(255, 0, 179), rgb(255, 0, 170));
+  background-size: 100% 10px;
+  background-repeat: no-repeat;
+  background-position: 100% 0%;
+  transition: background-size .7s, background-position .5s ease-in-out;
 }
+
+h1:hover {
+  background-size: 100% 100%;
+  background-position: 0% 100%;
+  transition: background-position .7s, background-size .5s ease-in-out;
+}
+
 
 .border-check {
   border: 0.5px solid black;
@@ -92,6 +111,21 @@ input {
   margin: 0;
 }
 
+.card-body {
+  height: 176px;
+}
+
+.card-details-html {
+  text-align: center;
+}
+
+.card-details-html p {
+  margin: 0;
+  padding: 1.5px;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
 .container-details {
   min-height: 60vh;
 }
@@ -100,12 +134,17 @@ input {
   width: 55vw;
 }
 
+table {
+  margin-bottom: 1rem;
+}
+
 table,
 th,
 td {
   font-size: 14px;
   border: 1px solid black;
   border-collapse: collapse;
+  text-align: center;
 }
 
 td,
@@ -117,27 +156,38 @@ th {
   .card-h {
     height: 40vh;
   }
+
   table,
   th,
   td {
     font-size: 20px;
   }
+
+  .image-details {
+    width: 70%;
+    padding: 5px;
+  }
+
+  .card-details-html {
+    min-height: 50vh;
+  }
 }
 
 @media only screen and (min-width: 1024px) {
   .image-details {
-    width: 35vw;
-    margin-left: 10px;
-    margin-bottom: 7px;
+    width: 50%;
+    height: 98%;
+    padding: 5px;
   }
 
-  .first-card-details {
-    height: 43vh;
+  .card-details-js {
+    height: 50vh;
   }
 
   .card-h {
     height: 40vh;
   }
+
   table,
   th,
   td {
